@@ -1,0 +1,56 @@
+---
+import GiscusComments from "@/components/GiscusComments.astro";
+import References from "@/components/References.astro";
+import { categoryLabels, formatDate, getPostUrl, type BlogPost } from "@/lib/blog";
+import { extractCitationKeys, getEntriesForKeys } from "@/lib/bibliography";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+type Props = {
+  post: BlogPost;
+};
+
+const { post } = Astro.props;
+const citationKeys = extractCitationKeys(post.body ?? "");
+const references = getEntriesForKeys(citationKeys);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} canonical={getPostUrl(post)}>
+  <article class="article-shell">
+    <header class="article-header">
+      <p class="eyebrow">{categoryLabels[post.data.category]}</p>
+      <h1>{post.data.title}</h1>
+      <p class="article-description">{post.data.description}</p>
+      <div class="article-meta">
+        <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+        {
+          post.data.updated && (
+            <>
+              <span aria-hidden="true">/</span>
+              <span>Updated {formatDate(post.data.updated)}</span>
+            </>
+          )
+        }
+      </div>
+      {
+        post.data.tags.length > 0 && (
+          <ul class="tag-list compact" aria-label="Tags">
+            {post.data.tags.map((tag) => (
+              <li>
+                <a href={`/blog/tag/${tag.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}/`}>
+                  {tag}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    <div class="article-content">
+      <slot />
+    </div>
+
+    <References entries={references} />
+    {post.data.comments && <GiscusComments />}
+  </article>
+</BaseLayout>

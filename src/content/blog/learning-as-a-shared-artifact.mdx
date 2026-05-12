@@ -1,0 +1,53 @@
+---
+title: "Learning as a Shared Artifact"
+description: "A short research note on why durable inquiry depends on traces that other people can inspect, revise, and reuse."
+date: 2026-05-09
+cover: "/avatar.jpg"
+coverAlt: "Portrait avatar used as a temporary cover image"
+tags: ["Research", "Writing Systems", "AI"]
+category: "research"
+draft: true
+comments: true
+---
+
+Research is often described as a private cognitive act followed by public
+communication. I increasingly find the reverse more useful: learning happens
+inside artifacts that are already social. A note, a dataset, a model card, or a
+small proof is not merely the residue of thinking. It is the place where thinking
+becomes inspectable.
+
+The modern machine learning paper makes this visible. The transformer is not
+just an architecture; it is a dense bundle of mathematical notation, experimental
+convention, code, diagrams, and citations [@vaswani2017attention]. Once the
+bundle is public, other people can stress it, extend it, and teach with it.
+
+For a minimal example, consider attention weights written as
+$\operatorname{softmax}(QK^\top / \sqrt{d_k})V$. The expression matters because
+it is compact, but its usefulness also depends on the practices around it: how
+we name tensors, how we compare baselines, and how we record failure.
+
+$$
+\mathrm{Attention}(Q, K, V) =
+\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}\right)V
+$$
+
+This is why I want a personal site to behave less like a portfolio and more like
+a working shelf. Some pages should be finished essays. Some should remain
+careful sketches. Others should simply record a question well enough that I can
+return to it with better tools.
+
+## Notes as Instruments
+
+Latour's account of science emphasizes inscriptions, chains of reference, and
+the work required to make claims travel [@latour1987science]. Digital writing
+systems inherit the same burden. If a note cannot carry its sources, assumptions,
+and revisions with it, it quickly becomes decorative memory.
+
+The aim, then, is modest: write in a way that keeps reasoning portable. A useful
+research note should make three things easy to recover:
+
+- what question was being asked;
+- which evidence changed the shape of the question;
+- what would make the note obsolete.
+
+That is a small standard, but it is enough to make writing more than storage.

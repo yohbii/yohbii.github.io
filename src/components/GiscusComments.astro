@@ -1,0 +1,41 @@
+---
+const {
+  PUBLIC_GISCUS_REPO,
+  PUBLIC_GISCUS_REPO_ID,
+  PUBLIC_GISCUS_CATEGORY,
+  PUBLIC_GISCUS_CATEGORY_ID,
+  PUBLIC_GISCUS_MAPPING = "pathname",
+  PUBLIC_GISCUS_THEME = "preferred_color_scheme"
+} = import.meta.env;
+
+const isConfigured =
+  PUBLIC_GISCUS_REPO &&
+  PUBLIC_GISCUS_REPO_ID &&
+  PUBLIC_GISCUS_CATEGORY &&
+  PUBLIC_GISCUS_CATEGORY_ID;
+---
+
+{
+  isConfigured ? (
+    <section class="comments" aria-labelledby="comments-title">
+      <h2 id="comments-title">Reactions & Discussion</h2>
+      <script
+        is:inline
+        src="https://giscus.app/client.js"
+        data-repo={PUBLIC_GISCUS_REPO}
+        data-repo-id={PUBLIC_GISCUS_REPO_ID}
+        data-category={PUBLIC_GISCUS_CATEGORY}
+        data-category-id={PUBLIC_GISCUS_CATEGORY_ID}
+        data-mapping={PUBLIC_GISCUS_MAPPING}
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme={PUBLIC_GISCUS_THEME}
+        data-lang="en"
+        crossorigin="anonymous"
+        async
+      />
+    </section>
+  ) : null
+}

@@ -1,0 +1,35 @@
+---
+import { navigation, site } from "@/lib/site";
+
+const pathname = Astro.url.pathname;
+---
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header">
+  <nav class="nav" aria-label="Primary navigation">
+    <a class="brand" href="/" aria-label={`${site.name} home`}>
+      <img class="brand-mark" src="/avatar.jpg" alt="" width="36" height="36" aria-hidden="true" />
+      <span>{site.name}</span>
+    </a>
+    <div class="nav-links">
+      {
+        navigation.map((item) => (
+          <a
+            href={item.href}
+            aria-current={
+              item.href === "/"
+                ? pathname === "/"
+                  ? "page"
+                  : undefined
+                : pathname.startsWith(item.href)
+                  ? "page"
+                  : undefined
+            }
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>

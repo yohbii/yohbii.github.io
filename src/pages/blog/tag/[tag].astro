@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+
+import PostList from "@/components/PostList.astro";
+import { collectTags, isPublished, slugify, sortPosts, type BlogPost } from "@/lib/blog";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).filter(isPublished);
+  const tags = collectTags(posts);
+
+  return tags.map((tag) => ({
+    params: { tag: tag.slug },
+    props: {
+      tag,
+      posts: posts.filter((post) =>
+        post.data.tags.some((postTag) => slugify(postTag) === tag.slug)
+      )
+    }
+  }));
+}
+
+const { tag, posts } = Astro.props as {
+  tag: { slug: string; label: string; count: number };
+  posts: BlogPost[];
+};
+const sortedPosts = sortPosts(posts);
+---
+
+<BaseLayout title={`#${tag.label}`} description={`Blogs tagged ${tag.label}.`}>
+  <div class="listing-shell">
+    <header class="listing-header">
+      <p class="eyebrow">Tag</p>
+      <h1>#{tag.label}</h1>
+      <p>{sortedPosts.length} published {sortedPosts.length === 1 ? "piece" : "pieces"} with this tag.</p>
+      <div class="archive-return">
+        <a href="/blog/">All blogs</a>
+      </div>
+    </header>
+    <PostList posts={sortedPosts} />
+  </div>
+</BaseLayout>

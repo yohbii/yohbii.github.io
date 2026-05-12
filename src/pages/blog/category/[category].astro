@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+
+import PostList from "@/components/PostList.astro";
+import { categoryLabels, isPublished, sortPosts, type BlogPost } from "@/lib/blog";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).filter(isPublished);
+  const categories = [...new Set(posts.map((post) => post.data.category))];
+
+  return categories.map((category) => ({
+    params: { category },
+    props: {
+      category,
+      posts: posts.filter((post) => post.data.category === category)
+    }
+  }));
+}
+
+const { category, posts } = Astro.props as {
+  category: BlogPost["data"]["category"];
+  posts: BlogPost[];
+};
+const sortedPosts = sortPosts(posts);
+---
+
+<BaseLayout title={categoryLabels[category]} description={`${categoryLabels[category]} blog archive.`}>
+  <div class="listing-shell">
+    <header class="listing-header">
+      <p class="eyebrow">Category</p>
+      <h1>{categoryLabels[category]}</h1>
+      <p>{sortedPosts.length} published {sortedPosts.length === 1 ? "piece" : "pieces"} in this category.</p>
+      <div class="archive-return">
+        <a href="/blog/">All blogs</a>
+      </div>
+    </header>
+    <PostList posts={sortedPosts} />
+  </div>
+</BaseLayout>

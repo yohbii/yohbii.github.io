@@ -1,0 +1,44 @@
+---
+import SiteHeader from "@/components/SiteHeader.astro";
+import { site } from "@/lib/site";
+import "@/styles/global.css";
+import "katex/dist/katex.min.css";
+
+type Props = {
+  title?: string;
+  description?: string;
+  canonical?: string;
+};
+
+const {
+  title = site.title,
+  description = site.description,
+  canonical = Astro.url.pathname
+} = Astro.props;
+
+const pageTitle = title === site.title ? title : `${title} | ${site.name}`;
+const canonicalUrl = new URL(canonical, site.url);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={site.title} href="/rss.xml" />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <SiteHeader />
+    <main id="main-content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>&copy; {new Date().getFullYear()} {site.name}.</p>
+    </footer>
+  </body>
+</html>

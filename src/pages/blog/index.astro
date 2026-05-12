@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+
+import PostList from "@/components/PostList.astro";
+import { collectCategories, collectTags, isPublished, sortPosts } from "@/lib/blog";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const posts = sortPosts((await getCollection("blog")).filter(isPublished));
+const categories = collectCategories(posts);
+const tags = collectTags(posts);
+---
+
+<BaseLayout title="Blogs" description="Research notes, essays, and life writing.">
+  <div class="listing-shell">
+    <header class="listing-header">
+      <p class="eyebrow">Archive</p>
+      <h1>Blogs</h1>
+      <p>
+        Notes on research, stray thoughts, and bits of life I want to keep
+        somewhere.
+      </p>
+    </header>
+
+    {posts.length > 0 ? <PostList posts={posts} /> : <p class="empty-state">No published posts yet.</p>}
+
+    <nav class="archive-tools" aria-label="Archive filters">
+      <div>
+        <h2>Categories</h2>
+        <div class="archive-link-row">
+          {categories.map((category) => (
+            <a href={`/blog/category/${category.category}/`}>
+              {category.label} ({category.count})
+            </a>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h2>Tags</h2>
+        <div class="archive-link-row">
+          {tags.map((tag) => (
+            <a href={`/blog/tag/${tag.slug}/`}>#{tag.label}</a>
+          ))}
+        </div>
+      </div>
+    </nav>
+  </div>
+</BaseLayout>
