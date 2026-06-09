@@ -15,7 +15,7 @@ export const navigation = [
 
 export const profile = {
   summary:
-    "👋 Hi, I am an undergraduate student in Software Engineering at Northeastern University, advised by Prof. Haidong Kang. My research interests include computer vision, AIGC, world models, and multimodal understanding.",
+    "👋 Hi, I am an undergraduate student in Software Engineering at Northeastern University. My research interests include computer vision, AIGC, world models, and multimodal understanding.",
   interests: [
     "computer vision",
     "AIGC",
