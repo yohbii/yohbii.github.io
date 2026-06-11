@@ -15,12 +15,13 @@ export const navigation = [
 
 export const profile = {
   summary:
-    "👋 Hi, I am an undergraduate student in Software Engineering at Northeastern University. My research interests include computer vision, AIGC, world models, and multimodal understanding.",
+    "👋 Hi, I am an undergraduate student in Software Engineering at Northeastern University and a research intern at the FudanCVL Lab led by Prof. Henghui Ding. My research interests include computer vision, AIGC, world models, and multimodal understanding.",
   interests: [
-    "computer vision",
+    "Computer Vision",
     "AIGC",
-    "world models",
-    "multimodal understanding"
+    "World Model",
+    "Embodied AI",
+    "Multimodal Understanding"
   ],
   links: [
     { href: "mailto:linlh@mails.neu.edu.cn", label: "Email" },
