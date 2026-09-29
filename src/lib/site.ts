@@ -1,27 +1,28 @@
 export const site = {
   name: "Lihong Lin",
-  title: "Lihong Lin | Research and Notes",
+  title: "Lihong Lin | Robotics, Generative Modeling & World Models",
   description:
-    "An academic personal website for research notes, essays, and occasional reflections.",
+    "Lihong Lin, incoming PhD student at FudanCVL Lab. Research interests in robotics, generative modeling, world models, and embodied intelligence.",
   url: "https://yohbii.github.io",
   email: "linlh@mails.neu.edu.cn",
   location: "Northeastern University"
 };
 
 export const navigation = [
-  { href: "/", label: "Home" },
+  { href: "/#about", label: "About" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#publications", label: "Publications" },
   { href: "/blog/", label: "Blogs" }
 ];
 
 export const profile = {
   summary:
-    "👋 Hi, I am an undergraduate student in Software Engineering at Northeastern University and a research intern at the FudanCVL Lab led by Prof. Henghui Ding. My research interests include computer vision, AIGC, world models, and multimodal understanding.",
+    "I am an undergraduate student in Software Engineering at Northeastern University and an incoming Ph.D. student at FudanCVL Lab, advised by Prof. Henghui Ding. My research interests lie in robotics, generative modeling, world models, and embodied intelligence.",
   interests: [
-    "Computer Vision",
-    "AIGC",
-    "World Model",
-    "Embodied AI",
-    "Multimodal Understanding"
+    "Robotics",
+    "Generative Modeling",
+    "World Models",
+    "Embodied Intelligence"
   ],
   links: [
     { href: "mailto:linlh@mails.neu.edu.cn", label: "Email" },
@@ -41,6 +42,8 @@ type SelectedPublication = {
 export const selectedPublications: SelectedPublication[] = [];
 
 type ExperienceItem = {
+  href: string;
+  logo: string;
   organization: string;
   role: string;
   period: string;
@@ -49,7 +52,25 @@ type ExperienceItem = {
 
 export const experiences: ExperienceItem[] = [
   {
+    organization: "FudanCVL Lab · Fudan University",
+    href: "https://henghuiding.com/",
+    logo: "/logos/fudan.ico",
+    role: "Incoming Ph.D. Student · Advised by Prof. Henghui Ding",
+    period: "2026 – Present",
+    description: "Incoming Ph.D. student advised by Prof. Henghui Ding."
+  },
+  {
+    organization: "Meituan LongCat · Robotics Group",
+    href: "https://longcat.ai/",
+    logo: "/logos/longcat.svg",
+    role: "Research Intern",
+    period: "2026 – Present",
+    description: "Research internship in the robotics group at Meituan LongCat."
+  },
+  {
     organization: "Northeastern University",
+    href: "https://www.neu.edu.cn/",
+    logo: "/logos/neu.ico",
     role: "B.Eng. Student in Software Engineering",
     period: "2023 - 2027 (Expected)",
     description:

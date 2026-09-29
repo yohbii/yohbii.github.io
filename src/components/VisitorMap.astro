@@ -1,13 +1,43 @@
-<div class="visitor-map" aria-label="Visitor map">
-  <div class="visitor-map-widget">
-    <script
-      is:inline
-      type="text/javascript"
-      id="clustrmaps"
-      src="//clustrmaps.com/map_v2.js?d=ohd2ajNY3IhKc4SuagA-M2uLitsXwpxfis6Rd9ZK-UY&cl=ffffff&w=500"
-    ></script>
+---
+// Set the site-specific globe URL from your analytics provider's dashboard.
+// MapMyVisitors globe registered for this website.
+const globeUrl = import.meta.env.PUBLIC_VISITOR_GLOBE_URL || "https://mapmyvisitors.com/globe.js?d=0NX3oAkF8wefzfnoMfP4dL3ZougN-T0ZNxvwCfI4Ubc";
+const statisticsUrl = import.meta.env.PUBLIC_VISITOR_STATS_URL;
+---
+<section class="visitor-map" aria-labelledby="visitors-title">
+  <h2 id="visitors-title">Visitors</h2>
+  <div class="visitor-map-widget" data-visitor-widget>
+    <script is:inline async id="mmvst_globe" src={globeUrl}></script>
   </div>
-  <a href="https://clustrmaps.com/site/1c9z5" target="_blank" rel="noreferrer">
-    Visitor statistics
-  </a>
-</div>
+  <p class="visitor-status" data-visitor-status aria-live="polite">Loading visitor map…</p>
+  {statisticsUrl && <a href={statisticsUrl} target="_blank" rel="noreferrer">Visitor statistics ↗</a>}
+  <noscript><p class="visitor-status">Enable JavaScript to view the visitor map.</p></noscript>
+</section>
+<script>
+  const widget = document.querySelector<HTMLElement>("[data-visitor-widget]");
+  const status = document.querySelector<HTMLElement>("[data-visitor-status]");
+  if (widget && status) {
+    let finished = false;
+    const observer = new MutationObserver(check);
+    const timeout = window.setTimeout(() => {
+      if (!finished) status.textContent = "Visitor map is currently unavailable.";
+    }, 8000);
+    function check() {
+      if (!widget || !status) return;
+      const rendered = widget.querySelector(".mmvst_inner, canvas, img");
+      if (!rendered || rendered.getBoundingClientRect().height < 50) return;
+      if (rendered instanceof HTMLImageElement && (!rendered.complete || !rendered.naturalWidth)) return;
+      finished = true;
+      status.hidden = true;
+      window.clearTimeout(timeout);
+      observer.disconnect();
+    }
+    observer.observe(widget, { childList: true, subtree: true, attributes: true });
+    widget.addEventListener("load", check, true);
+    document.getElementById("mmvst_globe")?.addEventListener("error", () => {
+      status.textContent = "Visitor map is currently unavailable.";
+      window.clearTimeout(timeout);
+    });
+    check();
+  }
+</script>

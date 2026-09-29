@@ -24,6 +24,13 @@ const canonicalUrl = new URL(canonical, site.url);
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem("site-theme");
+        document.documentElement.dataset.theme = saved === "dark" || saved === "light" ? saved : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      } catch {}
+    </script>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />

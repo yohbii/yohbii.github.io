@@ -6,7 +6,7 @@ import remarkMath from "remark-math";
 import remarkCitations from "./src/plugins/remark-citations.mjs";
 
 export default defineConfig({
-  site: "https://username.github.io",
+  site: "https://yohbii.github.io",
   integrations: [
     mdx({
       remarkPlugins: [remarkMath, remarkCitations],
