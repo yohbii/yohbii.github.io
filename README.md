@@ -73,9 +73,26 @@ PUBLIC_GISCUS_THEME
 
 For local testing, copy `.env.example` to `.env` and fill in the same values.
 
+## Visitor Map
+
+The homepage uses the MapMyVisitors globe registered for this site. To replace
+its embed code, set `PUBLIC_VISITOR_GLOBE_URL` and `PUBLIC_VISITOR_STATS_URL` in
+`.env` locally and in GitHub Actions repository variables for deployment.
+
+The default still uses `globe.js`. Its token comes from the same site's Map
+Widget code: the Globe Widget code supplied by the dashboard returned HTML
+from the data endpoint, whereas this token returns data for `/web/1c8jn`.
+
+The globe artwork alone does not confirm that tracking works. Verify that
+`globe_call_home.js` returns a JSONP callback, the globe links to the site's
+`/web/…` statistics page, and visits appear there. If the provider returns HTML
+instead, the page shows an unavailable message and a link to the statistics
+page; changing the site's CSS or rebuilding cannot repair that response.
+An empty but valid response keeps the globe visible with a message that no
+visitor locations are available yet; this is distinct from a loading error.
+
 ## Build
 
 ```sh
 npm run build
 ```
-
